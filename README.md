@@ -14,6 +14,28 @@
 ---
 
 ## Preparation
+```bash
+# clone Amber repository
+git clone --recursive https://github.com/OpenGVLab/video-mamba-suite.git
+
+# create environment
+conda create -n video-mamba-suite python=3.9
+conda activate video-mamba-suite
+
+# install pytorch
+pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+
+# install requirements
+pip install -r requirement.txt
+
+# install mamba
+cd causal-conv1d
+python setup.py develop
+cd ..
+cd mamba
+python setup.py develop
+cd ..
+```
 
 1. **Install PyTorch and dependencies**  
    Tested on:
