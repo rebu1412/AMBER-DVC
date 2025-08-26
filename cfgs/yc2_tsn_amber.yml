@@ -1,0 +1,24 @@
+id: yc2_tsn_amber
+base_cfg_path: cfgs/yc2_tsn_amberl.yml
+
+caption_decoder_type: light
+cap_nheads: 1
+cap_dec_n_points: 4
+cap_num_feature_levels: 4
+soft_attention: 1
+att_hid_size: 512
+
+ec_alpha: 1.0
+batch_size: 2
+dec_layers: 2
+
+set_cost_caption: 0
+set_cost_giou: 4
+set_cost_bbox: 0
+set_cost_class: 2
+
+caption_loss_coef: 4
+giou_loss_coef: 2
+bbox_loss_coef: 0
+cls_loss_coef: 2
+count_loss_coef: 0.5

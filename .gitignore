@@ -1,0 +1,70 @@
+# History files!
+.bash_history
+.python_history
+
+# C extensions
+*.so
+
+*.whl
+
+# System/user cache and config directory
+.cache/
+.config/
+.local/
+.nv/
+.jupyter/
+.python/
+
+# Jupyter Notebook checkpoint
+.ipynb_checkpoints/
+
+# Python virtual environment directories
+.env/
+.venv/
+env/
+venv/
+ENV/
+VENV/
+
+# IPython
+.ipython/
+history.sqlite
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE/Editor configuration file
+.vscode/
+.vscode-server/
+.idea/
+*.swp
+*.swo
+.dotnet/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Log files, temporary data
+*.log
+*.tmp
+*.temp
+
+# Dataset AND checkpoints
+*.gz
+*.npy
+baseline/save/
+# *.zip
+
+# Build, dist folder
+build/
+dist/
+*.egg-info/
+
+# Ignore GPG files
+.gnupg/
+
+echo "baseline/data/yc2/features/clipvitl14.pth" >> .gitignore

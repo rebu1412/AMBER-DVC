@@ -1,0 +1,38 @@
+id: yc2_tsn_amber
+base_cfg_path: cfgs/yc2_tsn_amberl.yml
+train_caption_file: 'data/yc2/captiondata/train.json'
+val_caption_file: 'data/yc2/captiondata/val.json'
+gt_file_for_eval: ['data/yc2/captiondata/val.json']
+
+caption_decoder_type: light
+cap_nheads: 1
+cap_dec_n_points: 4
+cap_num_feature_levels: 4
+soft_attention: 1
+
+ec_alpha: 1.0
+batch_size: 1
+dec_layers: 3
+feature_dim: 768
+
+set_cost_caption: 0
+set_cost_giou: 4
+set_cost_bbox: 0
+set_cost_class: 2
+
+caption_loss_coef: 4
+giou_loss_coef: 2
+bbox_loss_coef: 0
+cls_loss_coef: 2
+count_loss_coef: 0.5
+
+visual_feature_type: ['clip']
+visual_feature_folder: ['data/yc2/features/clipvitl14.pth']
+train_proposal_sample_num: 30
+lr: 0.00005
+learning_rate_decay_start: 8
+learning_rate_decay_every: 3
+learning_rate_decay_rate: 0.5
+weight_decay: 0.0001
+save_all_checkpoint: 0
+num_queries: 100
