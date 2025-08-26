@@ -1,5 +1,5 @@
 # AMBER: Anchor-based Mamba-driven Dense Video Captioning
-
+![](./pipeline.png)
 ---
 
 # 1. Preparation
