@@ -1,87 +1,65 @@
 # AMBER: Anchor-based Mamba-driven Dense Video Captioning
 
-## Table of Contents
-- [Preparation](#preparation)
-  - [Install Dependencies](#install-dependencies)
-  - [Install Mamba](#install-mamba)
-  - [Check Submodules](#check-submodules)
-- [Training](#training)
-  - [Download YouCook2 Features](#download-youcook2-features)
-  - [Training 1 Epoch](#training-1-epoch)
-- [Performance](#performance)
-  - [Dense Video Captioning on YouCook2](#dense-video-captioning-on-youcook2)
-- [Acknowledgement](#acknowledgement)
 ---
 
-## Preparation
+# Preparation
 ```bash
 # clone Amber repository
-git clone --recursive https://github.com/OpenGVLab/video-mamba-suite.git
+git clone https://github.com/rebu1412/AMBER-DVC.git
+cd AMBER-DVC
 
-# create environment
-conda create -n video-mamba-suite python=3.9
-conda activate video-mamba-suite
-
-# install pytorch
-pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
-
-# install requirements
-pip install -r requirement.txt
-
-# install mamba
-cd causal-conv1d
-python setup.py develop
-cd ..
-cd mamba
-python setup.py develop
-cd ..
+# Set-up Enviroment (DOCKER, NVIDIA CONTAINER TOOLKIT, IMAGE)
+# https://hub.docker.com/r/bombom2108/videomamba
+make setup VERSION=v5
+docker --version
+nvidia-ctk --version
+docker images
 ```
 
-1. **Install PyTorch and dependencies**  
-   Tested on:
-   - torch==1.13.1+cu117
-   - torch==2.1.2+cu118  
-   Other versions may also work.
+## Install Dependencies
+```bash
+# Install mamba_ssm and causal-conv1d inside docker container
+make run
+pip install -e amber/ops/
+pip install -e causal-conv1d/
+pip install -e mamba/
+```
 
-   conda install ffmpeg
-   pip install -r requirement.txt
+## Check Environment
+```bash
+# Inside docker container
+python
+from  .modules.mamba_simple import Mamba
+from mamba_ssm.modules.mamba_new import Mamba
+from baseline.densevid_eval3.SODA.soda import SODA
+# pip install pycocoevalcap 
+```
 
-2. **Install Mamba** following the main README.md of [Mamba Suited](https://github.com/OpenGVLab/video-mamba-suite), make sure it can be imported successfully:  
-   from mamba_ssm.modules.mamba_simple import Mamba
+# Training
+## Download YouCook2 Features
+```bash
+cd baseline/data/yc2/features/resnet_bn
+bash download_yc2_tsn_features.sh
+cd ../../..
+```
+## Training 
+```bash
+# training Amber-LSTM 1 epoch with learnt proposals
+python train.py --cfg_path cfgs/yc2_tsn_amber.yml
+                --disable_cudnn 1
+                --save_dir ./save/
+                --epoch 1
+```bash
+# Debug Mode
+python train.py --cfg_path cfgs/yc2_tsn_amber.yml
+                --disable_cudnn 1
+                --save_dir ./save/
+                --epoch 1
+                --debug
+```
 
-   from mamba_ssm.modules.mamba_new import Mamba
 
-3. **Check submodules `SODA` and `pycocoevalcap`** (used for evaluation):  
-   from densevid_eval3.SODA.soda import SODA
-
-   If not found, ensure the repo is cloned with `--recursive`, or run:  
-   cd path/to/your/video-mamba-suite/
-
-   git submodule update --init --recursive
-
----
-
-## Training
-
-### Download YouCook2 Features
-
-Download yc2 clip feature [baiduyun drive link](https://drive.google.com/file/d/17H_lxSKFve57kHpkAD7pcYS7ijHIy4-M/view). Then put it in data folder like 'CM2/data/yc2/features/clipvitl14.pth'
-
----
-
-### Training 1 epoch
-
-Example: train Amber-LSTM with learnt proposals on YouCook2 dataset (1 GPU):
-
-python train.py
-  --cfg_path cfgs/yc2_clip_pdvc.yml
-  --disable_cudnn 1 
-  --save_dir ./save/ 
-  --epoch 1
-
----
-
-## Performance
+# Performance
 
 ### Dense video captioning on YouCook2
 
